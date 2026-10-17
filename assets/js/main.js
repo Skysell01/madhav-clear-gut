@@ -1,8 +1,8 @@
 /**
- * Madhavbaug Clear Gut™ - High Conversion COD Landing Page Logic
+ * Madhavbaug Clear Gut™ - High Conversion COD Landing Page Logic (English)
  * Features:
  * 1. Product Showcase & 4-Flavor Interactive Highlights
- * 2. Pricing & Bundle Selector (1 Pack, 2 Packs - Most Popular, 4 Packs - Best Value)
+ * 2. Pricing & Bundle Selector (30 Sachets for 30 Days Format)
  * 3. Unified COD Lead Modal (Name, Phone, Address, City, State, Pincode)
  * 4. 24-Hour Duplicate Prevention by Contact Number
  * 5. Google Sheets Webhook Integration
@@ -21,7 +21,7 @@ const DUPLICATE_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
 document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
-  // 1. Pricing & Bundle Selector State
+  // 1. Pricing & Bundle Selector State (30 Sachets for 30 Days)
   // ==========================================================================
   const bundleCards = document.querySelectorAll('.bundle-card');
   const formPackCards = document.querySelectorAll('.form-pack-card');
@@ -34,30 +34,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const bundleData = [
     {
       index: 0,
-      title: '1 Pack (Pack of 30 Sachets - 4 Flavors Mix)',
+      title: '1 Pack (Pack of 30 Sachets for 30 Days)',
       sachets: 30,
       price: 899,
       original: 1299,
-      discount: '31% की छूट',
-      desc: '30 Days Starter: Pack of 30 Prebiotic Fiber Sachets'
+      discount: '31% OFF',
+      desc: '30-Day Starter: Pack of 30 Sachets for 30 Days (4 Flavors Mix)'
     },
     {
       index: 1,
-      title: '2 Packs (60 Days Gut Reset Course - 60 Sachets)',
+      title: '2 Packs (60 Days Course - 2x Pack of 30 Sachets for 30 Days)',
       sachets: 60,
       price: 1599,
       original: 2598,
-      discount: '38% की भारी छूट',
-      desc: 'Most Popular: 60 Days Complete Gut Cleanse & Constipation Relief'
+      discount: '38% OFF (Most Popular)',
+      desc: 'Most Popular: 60 Days Complete Gut Reset & Constipation Relief'
     },
     {
       index: 2,
-      title: '4 Packs (120 Days Full Microbiome Rebuild - 120 Sachets)',
+      title: '4 Packs (120 Days Course - 4x Pack of 30 Sachets for 30 Days)',
       sachets: 120,
       price: 2899,
       original: 5196,
-      discount: '44% की महा बचत',
-      desc: 'Best Value: 120 Days Long-term Gut Health & Digestion Immunity'
+      discount: '44% OFF (Best Value)',
+      desc: 'Best Value: 120 Days Full Microbiome Restoration & Vitality'
     }
   ];
 
@@ -238,18 +238,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const waShareBtn = document.getElementById('whatsappConfirmBtn');
 
     const addressParts = [address, city, state, pincode].filter(Boolean);
-    const formattedAddress = addressParts.length > 0 ? addressParts.join(', ') : 'डिलीवरी पते पर कैश ऑन डिलीवरी';
+    const formattedAddress = addressParts.length > 0 ? addressParts.join(', ') : 'Doorstep Cash On Delivery';
     const cityStateText = [city, state].filter(Boolean).join(', ') || 'Gut Health Verification Call';
 
     if (tyOrderId) tyOrderId.textContent = orderId;
-    if (tyCustomerName) tyCustomerName.textContent = name || 'प्रिय ग्राहक';
+    if (tyCustomerName) tyCustomerName.textContent = name || 'Valued Customer';
     if (tyPhone) tyPhone.textContent = `+91 ${phone}`;
     if (tyPack) tyPack.textContent = packTitle;
     if (tyAmount) tyAmount.textContent = `₹${amount.toLocaleString('en-IN')}`;
 
     if (waShareBtn) {
       const waText = encodeURIComponent(
-        `नमस्ते Madhavbaug! मैंने Clear Gut™ Prebiotic Fiber Drink का Cash On Delivery आर्डर किया है।\n` +
+        `Hello Madhavbaug! I have placed a Cash On Delivery order for Clear Gut™ Prebiotic Fiber Drink (Pack of 30 Sachets for 30 Days).\n` +
         `Order ID: ${orderId}\n` +
         `Pack: ${packTitle}\n` +
         `Amount: ₹${amount}\n` +
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModal(codModal);
     openModal(thankYouModal);
-    showToast('🎉 Cash on Delivery आर्डर सफलतापूर्वक दर्ज हो गया है!');
+    showToast('🎉 Cash on Delivery Order Placed Successfully!');
   }
 
   if (modalCodForm) {
@@ -280,14 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // 1. Check if contact number was already submitted within 24 hours
       if (checkDuplicateContact(phone)) {
         if (duplicateAlert) duplicateAlert.style.display = 'block';
-        showToast('⚠️ Already submitted form. Wait for 24hr, our gut health expert will call you.');
+        showToast('⚠️ Already submitted! Wait for 24hr, our gut health expert will call you.');
         return;
       }
 
       const submitBtn = document.getElementById('modalSubmitBtn');
       const originalText = submitBtn ? submitBtn.innerHTML : '';
       if (submitBtn) {
-        submitBtn.innerHTML = '⏳ आर्डर दर्ज हो रहा है...';
+        submitBtn.innerHTML = '⏳ Placing COD Order...';
         submitBtn.disabled = true;
       }
 
@@ -378,30 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // 7. Interactive Flavor Tab Switcher (Optional Quick Filter)
-  // ==========================================================================
-  const flavorPills = document.querySelectorAll('.flavor-filter-pill');
-  const flavorCards = document.querySelectorAll('.flavor-detail-card');
-  if (flavorPills.length > 0 && flavorCards.length > 0) {
-    flavorPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        const target = pill.getAttribute('data-flavor');
-        flavorPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-
-        flavorCards.forEach(card => {
-          if (target === 'all' || card.getAttribute('data-flavor') === target) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-  }
-
-  // ==========================================================================
-  // 8. Toast Helper
+  // 7. Toast Helper
   // ==========================================================================
   function showToast(message) {
     let toast = document.getElementById('appToast');
