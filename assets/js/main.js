@@ -34,30 +34,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const bundleData = [
     {
       index: 0,
-      title: '1 Pack (Pack of 30 Sachets for 30 Days)',
+      title: '1 Pack (30 Sachets for 30 Days • 1 Sachet = 15g)',
       sachets: 30,
       price: 899,
       original: 1299,
       discount: '31% OFF',
-      desc: '30-Day Starter: Pack of 30 Sachets for 30 Days (4 Flavors Mix)'
+      desc: '30-Day Starter: 30 Sachets (15g Each = 450g) • 4 Flavors Mix'
     },
     {
       index: 1,
-      title: '2 Packs (60 Days Course - 2x Pack of 30 Sachets for 30 Days)',
+      title: '2 Packs (60 Days Course • 60 Sachets x 15g)',
       sachets: 60,
       price: 1599,
       original: 2598,
       discount: '38% OFF (Most Popular)',
-      desc: 'Most Popular: 60 Days Complete Gut Reset & Constipation Relief'
+      desc: 'Most Popular: 60 Days Gut Reset (2x Pack of 30 Sachets • 1 Sachet = 15g)'
     },
     {
       index: 2,
-      title: '4 Packs (120 Days Course - 4x Pack of 30 Sachets for 30 Days)',
+      title: '4 Packs (120 Days Course • 120 Sachets x 15g)',
       sachets: 120,
       price: 2899,
       original: 5196,
       discount: '44% OFF (Best Value)',
-      desc: 'Best Value: 120 Days Full Microbiome Restoration & Vitality'
+      desc: 'Best Value: 120 Days Gut Restoration (4x Pack of 30 Sachets • 1 Sachet = 15g)'
     }
   ];
 
@@ -193,6 +193,17 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       openModal(codModal);
+
+      // Meta Pixel InitiateCheckout Event
+      if (typeof window.fbq === 'function') {
+        const bundle = bundleData[selectedBundleIndex] || bundleData[1];
+        window.fbq('track', 'InitiateCheckout', {
+          content_name: bundle.title,
+          content_category: 'Clear Gut Prebiotic Fiber Drink',
+          value: bundle.price,
+          currency: 'INR'
+        });
+      }
     });
   });
 
@@ -229,6 +240,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleOrderSuccess(name, phone, address, city, state, pincode, packTitle, amount, orderId) {
+    // Meta Pixel Lead Event Tracking
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', {
+        content_name: packTitle,
+        content_category: 'Clear Gut Prebiotic Fiber Drink',
+        value: amount,
+        currency: 'INR'
+      });
+    }
+
     // Populate Thank You Modal
     const tyOrderId = document.getElementById('thankYouOrderId');
     const tyCustomerName = document.getElementById('thankYouCustomerName');
@@ -249,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (waShareBtn) {
       const waText = encodeURIComponent(
-        `Hello Madhavbaug! I have placed a Cash On Delivery order for Clear Gut™ Prebiotic Fiber Drink (Pack of 30 Sachets for 30 Days).\n` +
+        `Hello Madhavbaug! I have placed a Cash On Delivery order for Clear Gut™ Prebiotic Fiber Drink (Pack of 30 Sachets for 30 Days • 1 Sachet = 15g).\n` +
         `Order ID: ${orderId}\n` +
         `Pack: ${packTitle}\n` +
         `Amount: ₹${amount}\n` +
