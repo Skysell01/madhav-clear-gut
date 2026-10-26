@@ -535,6 +535,29 @@ button {
   margin-bottom: 20px;
 }
 
+/* Hero Feature Image (Above Pricing) */
+.hero-feature-media-card {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1.5px solid var(--border-light);
+  box-shadow: 0 4px 16px rgba(194, 65, 12, 0.08);
+  background: #FFFFFF;
+}
+
+.hero-feature-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  transition: transform 0.35s ease;
+}
+
+.hero-feature-media-card:hover .hero-feature-img {
+  transform: scale(1.015);
+}
+
 /* Pricing Block */
 .pricing-block {
   display: flex;
